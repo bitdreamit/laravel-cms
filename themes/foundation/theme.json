@@ -1,0 +1,74 @@
+{
+    "name": "Foundation",
+    "slug": "foundation",
+    "version": "1.0.0",
+    "description": "Clean, modern starter theme for CMS Platform V4",
+    "author": "Platform Team",
+    "author_url": "https://platform.example.com",
+    "parent": null,
+    "type": "system",
+    "screenshot": "screenshot.png",
+    "min_cms_version": "4.0.0",
+    "supported_features": ["mega_menu", "hero_slider", "blog", "contact_form", "search"],
+    "tags": ["corporate", "minimal", "responsive", "blog"],
+    "settings_schema": {
+        "branding": {
+            "type": "section",
+            "title": "Branding",
+            "settings": {
+                "logo": { "type": "image", "label": "Logo", "default": "/images/logo.svg" },
+                "logo_height": { "type": "range", "label": "Logo Height", "min": 20, "max": 120, "default": 48, "unit": "px" },
+                "favicon": { "type": "image", "label": "Favicon" },
+                "brand_color": { "type": "color", "label": "Primary Color", "default": "#2563eb" },
+                "brand_color_hover": { "type": "color", "label": "Primary Hover", "default": "#1d4ed8" },
+                "secondary_color": { "type": "color", "label": "Secondary Color", "default": "#64748b" }
+            }
+        },
+        "typography": {
+            "type": "section",
+            "title": "Typography",
+            "settings": {
+                "heading_font": { "type": "font_picker", "label": "Heading Font", "default": "Inter", "google_fonts": true },
+                "body_font": { "type": "font_picker", "label": "Body Font", "default": "Inter", "google_fonts": true },
+                "base_font_size": { "type": "range", "label": "Base Font Size", "min": 12, "max": 22, "default": 16, "unit": "px" },
+                "line_height": { "type": "range", "label": "Line Height", "min": 1.0, "max": 2.5, "step": 0.1, "default": 1.6 }
+            }
+        },
+        "layout": {
+            "type": "section",
+            "title": "Layout",
+            "settings": {
+                "max_width": { "type": "range", "label": "Content Max Width", "min": 960, "max": 1600, "default": 1200, "unit": "px" },
+                "sidebar_position": { "type": "select", "label": "Blog Sidebar", "options": ["left","right","none"], "default": "right" },
+                "border_radius": { "type": "range", "label": "Border Radius", "min": 0, "max": 24, "default": 8, "unit": "px" },
+                "card_shadow": { "type": "toggle", "label": "Card Shadows", "default": true }
+            }
+        },
+        "header": {
+            "type": "section",
+            "title": "Header",
+            "settings": {
+                "header_style": { "type": "select", "label": "Header Style", "options": ["fixed","sticky","static","transparent"], "default": "sticky" },
+                "show_top_bar": { "type": "toggle", "label": "Show Top Bar", "default": false },
+                "top_bar_text": { "type": "text", "label": "Top Bar Text", "default": "" }
+            }
+        },
+        "footer": {
+            "type": "section",
+            "title": "Footer",
+            "settings": {
+                "footer_columns": { "type": "select", "label": "Footer Columns", "options": ["1","2","3","4"], "default": "4" },
+                "copyright_text": { "type": "text", "label": "Copyright Text", "default": "© {year} {site_name}" }
+            }
+        },
+        "advanced": {
+            "type": "section",
+            "title": "Advanced",
+            "settings": {
+                "custom_css": { "type": "code", "label": "Custom CSS", "mode": "css" },
+                "google_analytics_id": { "type": "text", "label": "Google Analytics ID" },
+                "facebook_pixel_id": { "type": "text", "label": "Facebook Pixel ID" }
+            }
+        }
+    }
+}

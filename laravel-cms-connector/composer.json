@@ -1,0 +1,39 @@
+{
+    "name": "platform/laravel-cms-connector",
+    "description": "Connect any existing Laravel app to the CMS Platform V4 — SSO bridge, model sync, event bus, embedded mode, headless API client.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laravel", "cms", "multi-tenant", "sso", "sync", "headless"],
+    "require": {
+        "php": "^8.1",
+        "illuminate/contracts": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "guzzlehttp/guzzle": "^7.5",
+        "firebase/php-jwt": "^6.10"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0",
+        "pestphp/pest": "^2.0|^3.0",
+        "pestphp/pest-plugin-laravel": "^2.0|^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Platform\\CmsConnector\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Platform\\CmsConnector\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["Platform\\CmsConnector\\CmsConnectorServiceProvider"],
+            "aliases": {
+                "CmsConnector": "Platform\\CmsConnector\\Facades\\CmsConnector"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

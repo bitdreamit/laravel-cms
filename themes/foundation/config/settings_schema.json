@@ -1,0 +1,28 @@
+{
+    "branding": {
+        "logo": "/images/logo.svg",
+        "logo_height": 48,
+        "brand_color": "#2563eb",
+        "brand_color_hover": "#1d4ed8"
+    },
+    "typography": {
+        "heading_font": "Inter",
+        "body_font": "Inter",
+        "base_font_size": 16,
+        "line_height": 1.6
+    },
+    "layout": {
+        "max_width": 1200,
+        "sidebar_position": "right",
+        "border_radius": 8,
+        "card_shadow": true
+    },
+    "header": {
+        "header_style": "sticky",
+        "show_top_bar": false
+    },
+    "footer": {
+        "footer_columns": "4",
+        "copyright_text": "© {year} {site_name}"
+    }
+}

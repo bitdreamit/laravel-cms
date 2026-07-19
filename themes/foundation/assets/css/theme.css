@@ -1,0 +1,54 @@
+/* Foundation Theme CSS - compiled from settings_schema */
+
+:root {
+    --brand-color: #2563eb;
+    --brand-color-hover: #1d4ed8;
+    --secondary-color: #64748b;
+    --text-color: #1e293b;
+    --bg-color: #ffffff;
+    --bg-muted: #f8fafc;
+    --border-color: #e5e7eb;
+    --border-radius: 8px;
+    --max-width: 1200px;
+    --font-heading: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --base-font-size: 16px;
+    --line-height: 1.6;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--base-font-size);
+    line-height: var(--line-height);
+    color: var(--text-color);
+    background: var(--bg-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+a {
+    color: var(--brand-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--brand-color-hover);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    background: var(--brand-color);
+    color: white;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: var(--brand-color-hover);
+    color: white;
+}
