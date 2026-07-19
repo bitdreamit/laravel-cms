@@ -4,21 +4,31 @@ use App\Http\Controllers\Public\EntryController;
 use App\Http\Controllers\Public\FormController;
 use Illuminate\Support\Facades\Route;
 
-// Home page
+/*
+|--------------------------------------------------------------------------
+| Tenant Web Routes
+|--------------------------------------------------------------------------
+|
+| These routes serve the public-facing tenant website.
+| The subdomain-to-collection routing decision is made inside the
+| EntryController at request time, NOT here at route-registration time.
+| This is critical: route files must NOT call app('current.domain') at
+| the top level, because that would fail during composer install /
+| package:discover when no request context exists.
+|
+*/
+
+// Home page — controller decides whether to show home or collection index
 Route::get('/', [EntryController::class, 'home']);
 
-// Subdomain-to-collection routing (V4)
-// If the current domain has a default_collection_handle set, / routes to that collection's index
-$domain = app('current.domain');
-if ($domain && $domain->default_collection_handle) {
-    Route::get('/', [EntryController::class, 'collectionIndex']);
-    Route::get('/{slug}', [EntryController::class, 'collectionShow'])->where('slug', '[a-z0-9\-]+');
-    Route::get('/category/{term}', [EntryController::class, 'collectionTerm']);
-} else {
-    // Default V3 routing — collection routes
-    Route::get('/{collectionHandle}', [EntryController::class, 'collectionIndex']);
-    Route::get('/{collectionHandle}/{slug}', [EntryController::class, 'collectionShow'])->where('slug', '[a-z0-9\-]+');
-}
+// Collection routing — the controller handles both modes:
+//   - Subdomain mode: /{slug} → entry in default_collection_handle
+//   - Standard mode:  /{collectionHandle}/{slug} → entry in that collection
+Route::get('/{slug}', [EntryController::class, 'collectionShow'])
+    ->where('slug', '[a-z0-9\-]+');
+
+// Category/term pages
+Route::get('/category/{term}', [EntryController::class, 'collectionTerm']);
 
 // Form submissions (public)
 Route::post('/forms/{formHandle}/submit', [FormController::class, 'submit']);
@@ -27,5 +37,6 @@ Route::post('/forms/{formHandle}/submit', [FormController::class, 'submit']);
 Route::get('/robots.txt', function () {
     $domain = app('current.domain');
     $override = $domain?->getConfigValue('robots_txt_override');
-    return response($override ?? "User-agent: *\nDisallow: /admin/\n")->header('Content-Type', 'text/plain');
+    return response($override ?? "User-agent: *\nDisallow: /admin/\n")
+        ->header('Content-Type', 'text/plain');
 });

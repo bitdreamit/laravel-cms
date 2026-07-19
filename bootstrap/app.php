@@ -3,38 +3,49 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
+        // NOTE: api.php is loaded in the then: closure below with proper
+        // tenancy middleware. Do NOT pass it to withRouting() to avoid
+        // double-loading.
         commands: __DIR__.'/../routes/console.php',
+        channels: __DIR__.'/../routes/channels.php',
         health: '/up',
         then: function () {
-            // Central/platform routes — NO tenancy middleware
-            // (handled by route groups in each route file)
-
-            // V3 + V4 tenant route files — each defines its own middleware group
-            Route::middleware(['web'])
+            // === Tenant web routes (with tenancy + V4 middleware) ===
+            Route::middleware(['web', 'tenant'])
                 ->group(base_path('routes/tenant-web.php'));
-            Route::middleware(['web', 'auth'])
+
+            Route::middleware(['web', 'tenant', 'auth'])
                 ->prefix('admin')
                 ->group(base_path('routes/tenant-admin.php'));
-            Route::middleware(['web', 'saml'])
+
+            Route::middleware(['web', 'tenant', 'saml'])
                 ->group(base_path('routes/saml.php'));
-            Route::middleware(['api', 'scim-auth'])
-                ->group(base_path('routes/scim.php'));
-            Route::middleware(['api'])
+
+            Route::middleware(['web', 'tenant'])
+                ->group(base_path('routes/collab.php'));
+
+            // === API routes (with tenancy initialization) ===
+            Route::middleware(['api', 'tenant-api'])
+                ->prefix('api/v1')
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware(['api', 'tenant-api'])
                 ->prefix('api/v1/connector')
                 ->group(base_path('routes/connector.php'));
-            Route::middleware(['web'])
-                ->group(base_path('routes/collab.php'));
+
+            Route::middleware(['api', 'scim-auth'])
+                ->prefix('scim/v2')
+                ->group(base_path('routes/scim.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
         // TENANT middleware group — runs tenancy resolution + V4 features.
-        // Applied ONLY to tenant routes (tenant-web, tenant-admin, saml, collab),
-        // NOT to central/platform-owner routes.
+        // Applied ONLY to tenant routes via the route groups above.
         $middleware->group('tenant', [
             \App\Http\Middleware\InitializeTenancyByDomain::class,
             \App\Http\Middleware\ResolveWildcardDomain::class,
@@ -49,15 +60,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\ApplyPersonalization::class,
         ]);
 
-        // CENTRAL middleware group — for platform-owner console only.
-        // NO tenancy middleware — these routes run in central context.
-        $middleware->group('central', [
-            // Add platform-specific middleware here if needed (e.g. ip-whitelist)
-        ]);
-
-        // API middleware group — for public + connector APIs.
-        // Tenancy is initialized via InitializeTenancyByDomain (which works
-        // for both web and API routes since it reads the Host header).
+        // API tenancy group — minimal middleware for API routes.
         $middleware->group('tenant-api', [
             \App\Http\Middleware\InitializeTenancyByDomain::class,
             \App\Http\Middleware\ResolveWildcardDomain::class,

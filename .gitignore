@@ -1,2 +1,6 @@
 /vendor
 /bootstrap
+/bootstrap
+/bootstrap
+bootstrap/app.php
+*.php

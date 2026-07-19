@@ -7,8 +7,8 @@ return [
     'path' => env('TELESCOPE_PATH', 'telescope'),
     'driver' => env('TELESCOPE_DRIVER', 'database'),
     'storage' => [
-        'database' => ['connection' => env('TELESCOPE_DB_CONNECTION', null)],
-        'redis' => ['connection' => env('TELESCOPE_REDIS_CONNECTION', null)],
+        'database' => ['connection' => env('TELESCOPE_DB_CONNECTION', env('DB_CONNECTION', 'mysql'))],
+        'redis' => ['connection' => env('TELESCOPE_REDIS_CONNECTION', 'default')],
     ],
     'enabled' => env('TELESCOPE_ENABLED', true),
     'middleware' => ['web', Authorize::class],

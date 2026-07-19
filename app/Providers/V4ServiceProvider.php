@@ -67,8 +67,8 @@ class V4ServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Register V4 route files
-        $this->registerRoutes();
+        // Route files are loaded by bootstrap/app.php (withRouting then: closure).
+        // Do NOT load routes here — they're already registered.
 
         // Register event listeners
         $this->registerListeners();
@@ -76,8 +76,8 @@ class V4ServiceProvider extends ServiceProvider
         // Register Blade directives
         $this->registerBladeDirectives();
 
-        // Register scheduled commands
-        $this->registerScheduledCommands();
+        // Scheduled commands are registered in routes/console.php
+        // Do NOT register them here — would cause duplicate schedule entries.
     }
 
     protected function registerRoutes(): void

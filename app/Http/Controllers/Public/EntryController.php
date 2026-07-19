@@ -9,24 +9,40 @@ use Illuminate\Http\Request;
 
 class EntryController extends Controller
 {
+    /**
+     * Home page — if the current domain has a default_collection_handle,
+     * show that collection's index instead of the home page.
+     */
     public function home()
     {
         $domain = app('current.domain');
+
         if ($domain && $domain->default_collection_handle) {
-            return $this->collectionIndex($domain->default_collection_handle);
+            return $this->collectionIndex();
         }
+
         return view('public.home');
     }
 
+    /**
+     * Collection index — lists entries in a collection.
+     * If no handle is provided, uses the domain's default_collection_handle.
+     */
     public function collectionIndex(string $collectionHandle = null)
     {
         $domain = app('current.domain');
-        $handle = $collectionHandle ?? $domain?->default_collection_handle;
 
-        if (! $handle) abort(404);
+        // If no handle passed, try to get from domain config
+        if (! $collectionHandle) {
+            $collectionHandle = $domain?->default_collection_handle;
+        }
+
+        if (! $collectionHandle) {
+            abort(404);
+        }
 
         $collection = Collection::where('tenant_id', tenant('id'))
-            ->where('handle', $handle)
+            ->where('handle', $collectionHandle)
             ->firstOrFail();
 
         $entries = Entry::where('tenant_id', tenant('id'))
@@ -42,18 +58,26 @@ class EntryController extends Controller
         ]);
     }
 
-    public function collectionShow(string $collectionHandle, string $slug = null)
+    /**
+     * Show a single entry.
+     * Handles both subdomain mode (/{slug}) and standard mode (/{collection}/{slug}).
+     */
+    public function collectionShow(Request $request, string $param1, ?string $param2 = null)
     {
-        // If only one parameter is passed, the URL is /{slug} and we look it up by collection
         $domain = app('current.domain');
 
-        if ($domain && $domain->default_collection_handle) {
-            // Subdomain mode: /{slug} → entry in default collection
-            $actualSlug = $collectionHandle;
+        // Subdomain mode: /{slug} → entry in default_collection_handle
+        if ($domain && $domain->default_collection_handle && $param2 === null) {
             $handle = $domain->default_collection_handle;
+            $slug = $param1;
         } else {
-            $actualSlug = $slug;
-            $handle = $collectionHandle;
+            // Standard mode: /{collectionHandle}/{slug}
+            $handle = $param1;
+            $slug = $param2;
+        }
+
+        if (! $handle || ! $slug) {
+            abort(404);
         }
 
         $collection = Collection::where('tenant_id', tenant('id'))
@@ -62,7 +86,7 @@ class EntryController extends Controller
 
         $entry = Entry::where('tenant_id', tenant('id'))
             ->where('collection_id', $collection->id)
-            ->where('slug', $actualSlug)
+            ->where('slug', $slug)
             ->where('status', 'published')
             ->where('published_at', '<=', now())
             ->firstOrFail();
@@ -73,11 +97,22 @@ class EntryController extends Controller
         ]);
     }
 
-    public function collectionTerm(string $term)
+    /**
+     * Show entries tagged with a specific term.
+     */
+    public function collectionTerm(Request $request, string $term)
     {
         $domain = app('current.domain');
         $handle = $domain?->default_collection_handle;
-        if (! $handle) abort(404);
+
+        if (! $handle) {
+            // If no default collection, try getting from route parameter
+            $handle = $request->route('collectionHandle');
+        }
+
+        if (! $handle) {
+            abort(404);
+        }
 
         $collection = Collection::where('tenant_id', tenant('id'))
             ->where('handle', $handle)
