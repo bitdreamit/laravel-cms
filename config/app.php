@@ -35,8 +35,7 @@ return [
         \Laravel\Sanctum\SanctumServiceProvider::class,
         \Laravel\Telescope\TelescopeServiceProvider::class,
         \Inertia\ServiceProvider::class,
-        // V4
-        \Aacotroneo\Saml2\Saml2ServiceProvider::class,
+        // V4 (SAML auto-registers via package discovery from scaler-tech/laravel-saml2)
         \App\Providers\V4ServiceProvider::class,
         \App\Providers\CmsServiceProvider::class,
         \App\Providers\TenancyServiceProvider::class,

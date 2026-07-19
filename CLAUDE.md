@@ -14,8 +14,8 @@ Custom Laravel 12 CMS + multi-tenant billing platform with V4 enhancements (Mult
 - spatie/laravel-medialibrary, spatie/laravel-activitylog
 - Laravel Reverb (WebSocket server for collab editing)
 - Laravel Sanctum/Fortify (admin auth)
-- aacotroneo/laravel-saml2 (SAML 2.0 SP)
-- limedeck/laravel-scim-server (SCIM 2.0)
+- scaler-tech/laravel-saml2 (SAML 2.0 SP)
+- arietimmerman/laravel-scim-server (SCIM 2.0)
 - acmephp/core (ACME SSL automation)
 - spatie/dns (DNS verification)
 - twig/twig (workflow condition expressions)

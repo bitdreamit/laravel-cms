@@ -19,7 +19,7 @@ package (platform/laravel-cms-connector) supporting 5 modes: SSO bridge, model s
 event bus, embedded mode, headless API. Pro features: Workflow Engine (custom DAG),
 A/B Testing (custom), Real-time Collab (Laravel Reverb + Yjs), AI RAG (pgvector or
 Meilisearch hybrid), Personalization (custom rules engine), SAML 2.0 SSO
-(aacotroneo/laravel-saml2), SCIM 2.0 (limedeck/laravel-scim-server), Audit Streaming
+(scaler-tech/laravel-saml2), SCIM 2.0 (arietimmerman/laravel-scim-server), Audit Streaming
 (Splunk/Datadog/Elastic/Syslog), Form Analytics & Lead Scoring. ~30 new tables, total
 ~77 tables. All V4 features are feature-flagged in tenants.data.features.{feature}.
 New test tenants: Shopland (existing Laravel app connecting via connector),
@@ -1163,7 +1163,7 @@ Task:
 PART A — SAML 2.0 SSO:
 
 1. Install dependencies:
-   - composer require aacotroneo/laravel-saml2 (extended for multi-tenant)
+   - composer require scaler-tech/laravel-saml2 (extended for multi-tenant)
    - Note: this package needs minor customization for multi-tenant SP —
      each tenant has its own SP entity ID and cert. Either fork the package
      OR build a custom SAML SP using lightsaml/lightsaml.
@@ -1219,7 +1219,7 @@ PART A — SAML 2.0 SSO:
 PART B — SCIM 2.0:
 
 8. Install dependencies:
-   - composer require limedeck/laravel-scim-server (extended for
+   - composer require arietimmerman/laravel-scim-server (extended for
      multi-tenant)
 
 9. Create tenant migration:

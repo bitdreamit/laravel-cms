@@ -103,10 +103,10 @@ composer require laravel/reverb
 composer require phadej/yjs  # or alternative Yjs PHP library
 
 # SAML SSO
-composer require aacotroneo/laravel-saml2
+composer require scaler-tech/laravel-saml2
 
 # SCIM 2.0
-composer require limedeck/laravel-scim-server
+composer require arietimmerman/laravel-scim-server
 composer require tmilos/scim-filter-parser
 
 # Workflow engine (Twig expression evaluator)
@@ -274,7 +274,7 @@ Laravel Reverb is a separate process. Set it up:
 
 #### Phase 17 (SAML/SCIM/Audit) — Multi-Tenant SAML Customization
 
-The `aacotroneo/laravel-saml2` package is designed for single-tenant SP. For multi-tenant, you have two options:
+The `scaler-tech/laravel-saml2` package is designed for single-tenant SP. For multi-tenant, you have two options:
 
 **Option A: Fork the package (recommended)**
 - Fork to `your-org/laravel-saml2-multi-tenant`
@@ -285,7 +285,7 @@ The `aacotroneo/laravel-saml2` package is designed for single-tenant SP. For mul
 - More work, but more control
 - Recommended if you need features the fork doesn't support
 
-For SCIM, `limedeck/laravel-scim-server` is similarly single-tenant by default. You'll need to either fork or build custom — Phase 17 prompt covers this.
+For SCIM, `arietimmerman/laravel-scim-server` is similarly single-tenant by default. You'll need to either fork or build custom — Phase 17 prompt covers this.
 
 #### Phase 19 (Polish) — Do Not Skip
 
@@ -492,7 +492,7 @@ If V4 upgrade causes issues, you can roll back:
 3. Run `composer remove` for V4-specific packages:
    ```bash
    composer remove acmephp/core spatie/dns laravel/reverb phadej/yjs \
-     aacotroneo/laravel-saml2 limedeck/laravel-scim-server tmilos/scim-filter-parser \
+     scaler-tech/laravel-saml2 arietimmerman/laravel-scim-server tmilos/scim-filter-parser \
      twig/twig
    ```
 4. Run `composer dump-autoload`.

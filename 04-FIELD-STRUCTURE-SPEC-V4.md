@@ -44,8 +44,8 @@
 | **V4: DNS Verification** | **spatie/dns** for TXT/CNAME record lookups |
 | **V4: Vector Store** | **pgvector** (Postgres) or **Meilisearch hybrid** for AI RAG embeddings |
 | **V4: Realtime Collab** | **Laravel Reverb** (WebSocket server) + **Yjs** for CRDT-based co-editing |
-| **V4: SAML** | **aacotroneo/laravel-saml2** for SAML 2.0 SP |
-| **V4: SCIM** | **limedeck/laravel-scim-server** for SCIM 2.0 user provisioning |
+| **V4: SAML** | **scaler-tech/laravel-saml2** for SAML 2.0 SP |
+| **V4: SCIM** | **arietimmerman/laravel-scim-server** for SCIM 2.0 user provisioning |
 | **V4: Workflow Engine** | **Custom** (visual flow builder, DAG executor) — no external dep |
 | **V4: A/B Testing** | **Custom** (variant assignment + traffic splitter) — no external dep |
 
@@ -1306,7 +1306,7 @@ Enterprise single sign-on via SAML 2.0 service provider. Supports Okta, Azure AD
 
 #### 19.6.2 Architecture
 
-Uses `aacotroneo/laravel-saml2` (extended for multi-tenant). Each tenant can configure multiple IdPs.
+Uses `scaler-tech/laravel-saml2` (extended for multi-tenant). Each tenant can configure multiple IdPs.
 
 **Login flow:**
 
@@ -1367,7 +1367,7 @@ Standard SCIM 2.0 endpoints at `/scim/v2/*`, authenticated via bearer token:
 
 #### 19.7.3 Implementation
 
-Uses `limedeck/laravel-scim-server` extended for multi-tenant. The CMS user model is mapped to SCIM `User` resource; CMS roles are mapped to SCIM `Group` resources.
+Uses `arietimmerman/laravel-scim-server` extended for multi-tenant. The CMS user model is mapped to SCIM `User` resource; CMS roles are mapped to SCIM `Group` resources.
 
 **IdP integration examples:**
 
