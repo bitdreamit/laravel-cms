@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Central\Tenant;
-use App\Models\Tenant\Site;
 use Illuminate\Database\Seeder;
 use Stancl\Tenancy\Tenancy;
 
@@ -29,7 +28,7 @@ class TenantDatabaseSeeder extends Seeder
                 ]);
 
                 // Create sites (locales) per tenant
-                Site::create([
+                \App\Models\Tenant\Site::create([
                     'id' => \Illuminate\Support\Str::uuid(),
                     'tenant_id' => tenant('id'),
                     'name' => 'Default',
@@ -40,7 +39,7 @@ class TenantDatabaseSeeder extends Seeder
 
                 // For Multilingual Co., create additional locale sites
                 if ($tenant->slug === 'multilingual') {
-                    Site::create([
+                    \App\Models\Tenant\Site::create([
                         'id' => \Illuminate\Support\Str::uuid(),
                         'tenant_id' => tenant('id'),
                         'name' => 'French',
@@ -49,7 +48,7 @@ class TenantDatabaseSeeder extends Seeder
                         'is_default' => false,
                     ]);
 
-                    Site::create([
+                    \App\Models\Tenant\Site::create([
                         'id' => \Illuminate\Support\Str::uuid(),
                         'tenant_id' => tenant('id'),
                         'name' => 'German',
@@ -58,7 +57,7 @@ class TenantDatabaseSeeder extends Seeder
                         'is_default' => false,
                     ]);
 
-                    Site::create([
+                    \App\Models\Tenant\Site::create([
                         'id' => \Illuminate\Support\Str::uuid(),
                         'tenant_id' => tenant('id'),
                         'name' => 'Bengali',

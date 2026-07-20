@@ -180,9 +180,11 @@ return [
     | Cross-cutting features that can be toggled.
     |--------------------------------------------------------------------------
     */
-    'features' => [
-        'test' => false,  // Enable test mode (skips some bootstrappers)
-    ],
+	'features' => [],
+
+	'app_features' => [
+		'test' => false,
+	],
 
     /*
     |--------------------------------------------------------------------------
