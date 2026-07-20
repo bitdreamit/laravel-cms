@@ -99,7 +99,7 @@ return new class extends Migration
             $table->uuid('blueprint_id')->nullable();
             $table->uuid('site_id')->nullable();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug', 150);
             $table->string('status')->default('draft');
             $table->json('data')->nullable();
             $table->timestamp('published_at')->nullable();
@@ -152,7 +152,7 @@ return new class extends Migration
             $table->uuid('tenant_id');
             $table->uuid('taxonomy_id');
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug', 150);
             $table->text('description')->nullable();
             $table->uuid('parent_id')->nullable();
             $table->integer('sort_order')->default(0);
@@ -260,9 +260,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('log_name')->nullable();
             $table->text('description');
-            $table->string('subject_type')->nullable();
+            $table->string('subject_type', 125)->nullable();
             $table->uuid('subject_id')->nullable();
-            $table->string('causer_type')->nullable();
+            $table->string('causer_type', 125)->nullable();
             $table->uuid('causer_id')->nullable();
             $table->json('properties')->nullable();
             $table->string('previous_hash', 64)->nullable();

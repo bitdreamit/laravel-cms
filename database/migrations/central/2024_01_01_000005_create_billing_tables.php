@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('price_monthly', 10, 2)->default(0);
             $table->decimal('price_yearly', 10, 2)->default(0);
             $table->string('currency', 3)->default('USD');
-            $table->integer('max_domains')->default(1);
+            $table->integer('max_domains')->nullable()->default(1); // null = unlimited
             $table->integer('max_admin_users')->default(5);
             $table->integer('max_storage_mb')->default(1024);
             $table->integer('max_themes')->default(1);

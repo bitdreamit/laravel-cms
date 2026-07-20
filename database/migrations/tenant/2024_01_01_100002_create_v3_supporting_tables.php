@@ -28,7 +28,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('tenant_id');
             $table->uuid('container_id');
-            $table->string('folder')->default('/');
+            $table->string('folder', 50)->default('/');
             $table->string('filename');
             $table->string('path');
             $table->string('mime_type');
@@ -44,7 +44,8 @@ return new class extends Migration
 
             $table->foreign('tenant_id')->references('id')->on('tenants')->cascadeOnDelete();
             $table->foreign('container_id')->references('id')->on('asset_containers')->cascadeOnDelete();
-            $table->index(['tenant_id', 'container_id', 'folder']);
+            // Use 2-column index instead of 3-column to avoid MySQL 1000-byte index limit
+            $table->index(['tenant_id', 'container_id']);
         });
 
         Schema::create('redirects', function (Blueprint $table) {
@@ -137,8 +138,8 @@ return new class extends Migration
         // Spatie permission tables (team-scoped to tenant_id)
         Schema::create('roles', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('guard_name')->default('web');
+            $table->string('name', 125);
+            $table->string('guard_name', 25)->default('web');
             $table->uuid('team_id')->nullable();
             $table->json('data')->nullable();
             $table->timestamps();
@@ -148,8 +149,8 @@ return new class extends Migration
 
         Schema::create('permissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('guard_name')->default('web');
+            $table->string('name', 125);
+            $table->string('guard_name', 25)->default('web');
             $table->uuid('team_id')->nullable();
             $table->timestamps();
 
@@ -158,7 +159,7 @@ return new class extends Migration
 
         Schema::create('model_has_permissions', function (Blueprint $table) {
             $table->uuid('permission_id');
-            $table->string('model_type');
+            $table->string('model_type', 125);
             $table->uuid('model_id');
             $table->uuid('team_id')->nullable();
 
@@ -169,7 +170,7 @@ return new class extends Migration
 
         Schema::create('model_has_roles', function (Blueprint $table) {
             $table->uuid('role_id');
-            $table->string('model_type');
+            $table->string('model_type', 125);
             $table->uuid('model_id');
             $table->uuid('team_id')->nullable();
 

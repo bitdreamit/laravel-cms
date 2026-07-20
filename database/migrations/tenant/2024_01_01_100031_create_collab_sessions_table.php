@@ -12,7 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('tenant_id');
             $table->uuid('entry_id');
-            $table->string('field_handle');
+            $table->string('field_handle', 100);
             $table->binary('yjs_document_state')->nullable();
             $table->timestamp('last_active_at')->useCurrent();
             $table->timestamps();
