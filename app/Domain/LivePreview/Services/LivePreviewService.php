@@ -48,7 +48,7 @@ class LivePreviewService
 
         // Render the entry's template
         $template = $entry->template ?: 'default';
-        $theme = app('current.theme');
+        $theme = app()->bound('current.theme') ? (app()->bound('current.theme') ? app('current.theme') : null) : null;
 
         $html = view("theme::pages.{$template}", [
             'entry' => $entry,

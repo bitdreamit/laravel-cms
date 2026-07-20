@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | These routes serve the public-facing tenant website.
 | The subdomain-to-collection routing decision is made inside the
 | EntryController at request time, NOT here at route-registration time.
-| This is critical: route files must NOT call app('current.domain') at
+| This is critical: route files must NOT call app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null at
 | the top level, because that would fail during composer install /
 | package:discover when no request context exists.
 |
@@ -35,7 +35,7 @@ Route::post('/forms/{formHandle}/submit', [FormController::class, 'submit']);
 
 // Robots.txt (V4 supports per-domain override)
 Route::get('/robots.txt', function () {
-    $domain = app('current.domain');
+    $domain = app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null;
     $override = $domain?->getConfigValue('robots_txt_override');
     return response($override ?? "User-agent: *\nDisallow: /admin/\n")
         ->header('Content-Type', 'text/plain');

@@ -12,7 +12,7 @@ class ThemeResolver
     public function resolve(?Tenant $tenant = null, ?Domain $domain = null): ?Theme
     {
         $tenant ??= tenant();
-        $domain ??= app('current.domain');
+        $domain ??= app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null;
 
         // V4: Per-domain theme override takes precedence
         if ($domain && $domain->theme_id && tenant_has_feature('multi_domain')) {

@@ -7,7 +7,7 @@ class ThemeColorFieldType extends BaseFieldType {
     }
     public function toVueComponentProps(mixed $value, array $config = []): array {
         $props = parent::toVueComponentProps($value, $config);
-        $theme = app('current.theme');
+        $theme = app()->bound('current.theme') ? (app()->bound('current.theme') ? app('current.theme') : null) : null;
         if ($theme) {
             $props['theme_palette'] = data_get($theme->settings_schema, 'branding.settings', []);
         }

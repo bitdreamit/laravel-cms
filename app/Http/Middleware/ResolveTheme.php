@@ -17,7 +17,7 @@ class ResolveTheme
             return $next($request);
         }
 
-        $domain = app('current.domain');
+        $domain = app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null;
         $themeId = null;
 
         // V4: Per-domain theme override takes precedence

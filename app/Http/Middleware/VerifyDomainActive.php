@@ -21,7 +21,7 @@ class VerifyDomainActive
             return $next($request);
         }
 
-        $domain = app('current.domain');
+        $domain = app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null;
 
         if (! $domain) {
             return $next($request);

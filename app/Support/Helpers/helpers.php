@@ -43,7 +43,7 @@ if (! function_exists('current_domain')) {
      */
     function current_domain(): ?\App\Models\Central\Domain
     {
-        return app('current.domain');
+        return app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null;
     }
 }
 
@@ -53,7 +53,7 @@ if (! function_exists('current_theme')) {
      */
     function current_theme(): ?\App\Models\Central\Theme
     {
-        return app('current.theme');
+        return app()->bound('current.theme') ? (app()->bound('current.theme') ? app('current.theme') : null) : null;
     }
 }
 
@@ -63,7 +63,7 @@ if (! function_exists('current_site')) {
      */
     function current_site(): ?\App\Models\Tenant\Site
     {
-        return app('current.site');
+        return app()->bound('current.site') ? (app()->bound('current.site') ? app('current.site') : null) : null;
     }
 }
 

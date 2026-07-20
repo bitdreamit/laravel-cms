@@ -49,7 +49,7 @@ class ThemeBladeServiceProvider extends ServiceProvider
 
         // @themeHasFeature('feature') / @endThemeHasFeature
         Blade::directive('themeHasFeature', function ($expression) {
-            return "<?php if(app('current.theme')?->hasFeature({$expression})): ?>";
+            return "<?php if((app()->bound('current.theme') ? app('current.theme') : null)?->hasFeature({$expression})): ?>";
         });
         Blade::directive('endThemeHasFeature', function () {
             return '<?php endif; ?>';

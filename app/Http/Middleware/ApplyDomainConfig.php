@@ -21,7 +21,7 @@ class ApplyDomainConfig
             return $next($request);
         }
 
-        $domain = app('current.domain');
+        $domain = app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null;
 
         if (! $domain || ! $domain->config) {
             return $next($request);

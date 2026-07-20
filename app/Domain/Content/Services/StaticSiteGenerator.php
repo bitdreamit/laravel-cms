@@ -124,7 +124,7 @@ class StaticSiteGenerator
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
-        $domain = app('current.domain');
+        $domain = app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null;
         $baseUrl = $domain ? "https://{$domain->domain}" : url('/');
 
         foreach ($routes as $route) {
@@ -147,7 +147,7 @@ class StaticSiteGenerator
 
     protected function copyAssets(string $outputDir): void
     {
-        $theme = app('current.theme');
+        $theme = app()->bound('current.theme') ? (app()->bound('current.theme') ? app('current.theme') : null) : null;
         if (! $theme) return;
 
         $assetsPath = "{$theme->path}/assets";

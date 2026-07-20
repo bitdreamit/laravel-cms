@@ -15,7 +15,8 @@ class EntryController extends Controller
      */
     public function home()
     {
-        $domain = app('current.domain');
+        // Safely get the current domain — may be null on central/localhost
+        $domain = app()->bound('current.domain') ? app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null : null;
 
         if ($domain && $domain->default_collection_handle) {
             return $this->collectionIndex();
@@ -30,7 +31,7 @@ class EntryController extends Controller
      */
     public function collectionIndex(string $collectionHandle = null)
     {
-        $domain = app('current.domain');
+        $domain = app()->bound('current.domain') ? app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null : null;
 
         // If no handle passed, try to get from domain config
         if (! $collectionHandle) {
@@ -64,7 +65,7 @@ class EntryController extends Controller
      */
     public function collectionShow(Request $request, string $param1, ?string $param2 = null)
     {
-        $domain = app('current.domain');
+        $domain = app()->bound('current.domain') ? app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null : null;
 
         // Subdomain mode: /{slug} → entry in default_collection_handle
         if ($domain && $domain->default_collection_handle && $param2 === null) {
@@ -102,7 +103,7 @@ class EntryController extends Controller
      */
     public function collectionTerm(Request $request, string $term)
     {
-        $domain = app('current.domain');
+        $domain = app()->bound('current.domain') ? app()->bound('current.domain') ? (app()->bound('current.domain') ? app('current.domain') : null) : null : null;
         $handle = $domain?->default_collection_handle;
 
         if (! $handle) {
