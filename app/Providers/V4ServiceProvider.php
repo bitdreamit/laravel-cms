@@ -67,45 +67,12 @@ class V4ServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Route files are loaded by bootstrap/app.php (withRouting then: closure).
-        // Do NOT load routes here — they're already registered.
+        // Route files are loaded by bootstrap/app.php
+        // Scheduled commands are loaded by routes/console.php
+        // Only register event listeners and Blade directives here.
 
-        // Register event listeners
         $this->registerListeners();
-
-        // Register Blade directives
         $this->registerBladeDirectives();
-
-        // Scheduled commands are registered in routes/console.php
-        // Do NOT register them here — would cause duplicate schedule entries.
-    }
-
-    protected function registerRoutes(): void
-    {
-        \Illuminate\Support\Facades\Route::middleware(['web', 'saml'])
-            ->group(base_path('routes/saml.php'));
-
-        \Illuminate\Support\Facades\Route::middleware(['api', 'scim-auth'])
-            ->prefix('scim/v2')
-            ->group(base_path('routes/scim.php'));
-
-        \Illuminate\Support\Facades\Route::middleware(['api'])
-            ->prefix('api/v1/connector')
-            ->group(base_path('routes/connector.php'));
-
-        \Illuminate\Support\Facades\Route::middleware(['web'])
-            ->group(base_path('routes/collab.php'));
-
-        \Illuminate\Support\Facades\Route::middleware(['web'])
-            ->group(base_path('routes/tenant-web.php'));
-
-        \Illuminate\Support\Facades\Route::middleware(['web', 'auth'])
-            ->prefix('admin')
-            ->group(base_path('routes/tenant-admin.php'));
-
-        \Illuminate\Support\Facades\Route::middleware(['api'])
-            ->prefix('api/v1')
-            ->group(base_path('routes/api.php'));
     }
 
     protected function registerListeners(): void
@@ -120,18 +87,8 @@ class V4ServiceProvider extends ServiceProvider
         \Illuminate\Support\Facades\Event::listen(
             \App\Domain\Content\Events\EntryPublished::class,
             function (\App\Domain\Content\Events\EntryPublished $event) {
-                if (tenant_has_feature('ai_rag')) {
+                if (function_exists('tenant_has_feature') && tenant_has_feature('ai_rag')) {
                     \App\Domain\Rag\Jobs\IndexEntry::dispatch($event->entry->id);
-                }
-            }
-        );
-
-        // Audit streaming
-        \Illuminate\Support\Facades\Event::listen(
-            'Spatie\Activitylog\Events\ActivityLogged',
-            function ($event) {
-                if (tenant_has_feature('audit_streaming')) {
-                    app(AuditStreamManager::class)->onActivityLogged($event->activity);
                 }
             }
         );
@@ -139,10 +96,6 @@ class V4ServiceProvider extends ServiceProvider
 
     protected function registerBladeDirectives(): void
     {
-        \Illuminate\Support\Facades\Blade::directive('theme', function ($expression) {
-            return "<?php echo app('current.theme')?->settings[{$expression}] ?? ''; ?>";
-        });
-
         \Illuminate\Support\Facades\Blade::directive('personalizeBlock', function ($expression) {
             return "<?php if(!in_array({$expression}, session('personalization.hidden_blocks', []))): ?>";
         });
@@ -150,19 +103,5 @@ class V4ServiceProvider extends ServiceProvider
         \Illuminate\Support\Facades\Blade::directive('endPersonalizeBlock', function () {
             return "<?php endif; ?>";
         });
-    }
-
-    protected function registerScheduledCommands(): void
-    {
-        if (! $this->app->runningInConsole()) return;
-
-        \Illuminate\Support\Facades\Schedule::command('ssl:renew')->dailyAt('02:00');
-        \Illuminate\Support\Facades\Schedule::command('dns:retry-failed')->hourly();
-        \Illuminate\Support\Facades\Schedule::command('audit:verify-chain')->weekly();
-        \Illuminate\Support\Facades\Schedule::command('workflow:check-sla-breaches')->dailyAt('08:00');
-        \Illuminate\Support\Facades\Schedule::command('experiments:check-winners')->hourly();
-        \Illuminate\Support\Facades\Schedule::command('rag:reindex-stale')->dailyAt('03:00');
-        \Illuminate\Support\Facades\Schedule::command('collab:cleanup-stale-sessions')->everyFifteenMinutes();
-        \Illuminate\Support\Facades\Schedule::command('audit:retry-failed-deliveries')->everyFiveMinutes();
     }
 }

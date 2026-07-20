@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Support\Helpers;
-
-use App\Models\Central\Tenant;
+/**
+ * CMS V6 Helper Functions
+ *
+ * These functions are in the global namespace so they can be called
+ * from anywhere in the application without namespace prefixes.
+ */
 
 if (! function_exists('tenant_has_feature')) {
     /**
@@ -10,7 +13,7 @@ if (! function_exists('tenant_has_feature')) {
      */
     function tenant_has_feature(string $feature): bool
     {
-        if (! tenancy()->initialized) {
+        if (! function_exists('tenancy') || ! tenancy()->initialized) {
             return false;
         }
 

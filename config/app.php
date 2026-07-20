@@ -26,9 +26,11 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
     'providers' => ServiceProvider::defaultProviders()->merge([
-        // Core
+        // Core — MUST be first (loads helpers + default string length)
         \App\Providers\AppServiceProvider::class,
-        // V3
+        \App\Providers\CmsServiceProvider::class,
+
+        // V3 packages
         \Stancl\Tenancy\TenancyServiceProvider::class,
         \Spatie\Permission\PermissionServiceProvider::class,
         \Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
@@ -36,10 +38,10 @@ return [
         \Laravel\Fortify\FortifyServiceProvider::class,
         \Laravel\Sanctum\SanctumServiceProvider::class,
         \Laravel\Telescope\TelescopeServiceProvider::class,
-        \Inertia\ServiceProvider::class,
-        // V4 (SAML auto-registers via package discovery from scaler-tech/laravel-saml2)
+
+        // V4 — registered AFTER CmsServiceProvider so helpers are available
         \App\Providers\V4ServiceProvider::class,
-        \App\Providers\CmsServiceProvider::class,
+        \App\Providers\ThemeBladeServiceProvider::class,
         \App\Providers\TenancyServiceProvider::class,
         \App\Providers\EventServiceProvider::class,
     ])->toArray(),

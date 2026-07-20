@@ -6,3 +6,4 @@ bootstrap/app.php
 *.php
 .env
 *.php
+/.idea
