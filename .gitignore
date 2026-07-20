@@ -4,3 +4,4 @@
 /bootstrap
 bootstrap/app.php
 *.php
+.env
