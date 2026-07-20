@@ -12,7 +12,6 @@ return Application::configure(basePath: dirname(__DIR__))
         // tenancy middleware. Do NOT pass it to withRouting() to avoid
         // double-loading.
         commands: __DIR__.'/../routes/console.php',
-        channels: __DIR__.'/../routes/channels.php',
         health: '/up',
         then: function () {
             // === Tenant web routes (with tenancy + V4 middleware) ===
