@@ -26,6 +26,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
     'providers' => ServiceProvider::defaultProviders()->merge([
+        // Core
+        \App\Providers\AppServiceProvider::class,
         // V3
         \Stancl\Tenancy\TenancyServiceProvider::class,
         \Spatie\Permission\PermissionServiceProvider::class,
