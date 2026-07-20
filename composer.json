@@ -11,7 +11,6 @@
         "laravel/fortify": "^1.21",
         "laravel/reverb": "^1.0",
         "laravel/telescope": "^5.0",
-        "laravel/tinker": "^3.0",
         "laravel/socialite": "^5.0",
         "stancl/tenancy": "^3.8",
         "spatie/laravel-permission": "^6.4",

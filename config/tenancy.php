@@ -180,11 +180,11 @@ return [
     | Cross-cutting features that can be toggled.
     |--------------------------------------------------------------------------
     */
-	'features' => [],
+    'features' => [],
 
-	'app_features' => [
-		'test' => false,
-	],
+    'app_features' => [
+        'test' => false,
+    ],
 
     /*
     |--------------------------------------------------------------------------

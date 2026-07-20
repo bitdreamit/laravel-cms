@@ -25,6 +25,26 @@ class Tenant extends BaseTenant
         'trial_ends_at' => 'datetime',
     ];
 
+    /**
+     * Define which attributes map to actual database columns
+     * instead of being nested inside the 'data' JSON field.
+     *
+     * Without this, stancl/tenancy puts everything into the JSON 'data' column,
+     * causing "Field 'name' doesn't have a default value" errors on MySQL strict mode.
+     */
+    public static function getCustomColumns(): array
+    {
+        return [
+            'id',
+            'name',
+            'slug',
+            'plan_id',
+            'status',
+            'trial_ends_at',
+            'current_theme_id',
+        ];
+    }
+
     public function domains(): HasMany
     {
         return $this->hasMany(Domain::class, 'tenant_id');

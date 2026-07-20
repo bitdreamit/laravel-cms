@@ -22,6 +22,7 @@ class User extends Authenticatable
         'id', 'name', 'email', 'password', 'avatar',
         'is_platform_super_admin', 'two_factor_secret', 'two_factor_recovery_codes',
         'two_factor_confirmed_at', 'last_login_at', 'locale', 'theme_preference',
+        'is_active', 'tags',
     ];
 
     protected $hidden = [
