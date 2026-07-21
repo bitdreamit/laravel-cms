@@ -35,7 +35,7 @@ return [
         \Spatie\Permission\PermissionServiceProvider::class,
         \Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         \Spatie\Activitylog\ActivitylogServiceProvider::class,
-        \Laravel\Fortify\FortifyServiceProvider::class,
+        \App\Providers\FortifyServiceProvider::class,
         \Laravel\Sanctum\SanctumServiceProvider::class,
         \Laravel\Telescope\TelescopeServiceProvider::class,
 
