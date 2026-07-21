@@ -8,9 +8,9 @@
   "dependencies": {
     "@vue/server-renderer": "^3.4.0",
     "vue": "^3.4.0",
+    "yjs": "^13.6.0",
     "y-prosemirror": "^1.2.0",
-    "y-websocket": "^2.0.0",
-    "yjs": "^13.6.0"
+    "y-websocket": "^2.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",

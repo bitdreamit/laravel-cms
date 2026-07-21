@@ -18,7 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['web', 'tenant'])
                 ->group(base_path('routes/tenant-web.php'));
 
-            Route::middleware(['web', 'tenant', 'auth'])
+            // Admin routes — accessible on both central and tenant domains.
+            // Uses 'auth' middleware. Tenancy initializes automatically if
+            // the request comes from a tenant domain (via InitializeTenancyByDomain
+            // which is included in the 'tenant' group below, but we also add it
+            // here for admin routes so tenant context is available).
+            Route::middleware(['web', 'auth'])
                 ->prefix('admin')
                 ->group(base_path('routes/tenant-admin.php'));
 

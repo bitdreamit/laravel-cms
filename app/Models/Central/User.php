@@ -9,12 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 use Stancl\Tenancy\Database\Concerns\CentralConnection;
 
 class User extends Authenticatable
 {
-	use CentralConnection, HasApiTokens, HasFactory, HasRoles, Notifiable;
+    use CentralConnection, HasApiTokens, HasFactory, Notifiable;
 
     protected $keyType = 'string';
     public $incrementing = false;

@@ -12,7 +12,25 @@ use App\Http\Controllers\Admin\ScimTokenController;
 use App\Http\Controllers\Admin\AuditStreamController;
 use App\Http\Controllers\Admin\ConnectorController;
 use App\Http\Controllers\Admin\FeatureFlagController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EntryController;
+use App\Http\Controllers\Admin\CollectionController;
+use App\Http\Controllers\Admin\BlueprintController;
+use App\Http\Controllers\Admin\TaxonomyController;
+use App\Http\Controllers\Admin\GlobalController;
+use App\Http\Controllers\Admin\NavigationController;
+use App\Http\Controllers\Admin\FormController;
+use App\Http\Controllers\Admin\AssetController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\BillingController;
+use App\Http\Controllers\Admin\RedirectController;
+use App\Http\Controllers\Admin\ImportController;
+use App\Http\Controllers\Admin\UtilityController;
 use Illuminate\Support\Facades\Route;
+
+// Dashboard (the main admin page)
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 Route::middleware(['auth'])->group(function () {
 
