@@ -7,3 +7,4 @@ bootstrap/app.php
 .env
 *.php
 /.idea
+/node_modules
